@@ -2,18 +2,11 @@ package sample;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
@@ -21,37 +14,36 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class MainOblig extends Application {
-    //Valg av verger og figurer deklarasjon
+    //Valg av farger og figurer deklarasjon
+    //Label ved siden av ColorPicker beskriver valg av farger
+    //ArrayList som plasserer alle figurene fra figur abstract klassen, inn i en Array(List)
     ColorPicker picker = new ColorPicker();
-    Label lbl = new Label(" velg farge ");
+    Label lbl = new Label(" Velg Farge ");
     ArrayList<Figur> figures = new ArrayList<>();
 
-
+    //Canvas
     private Pane pane;
-    //
+
     @Override
     public void start(Stage primaryStage) {
         pane = new Pane();
-// lager radio button knapper
+        //Lager radioknapper til hver figur
         RadioButton radioButton1 = new RadioButton("Rectangel");
         RadioButton radioButton2 = new RadioButton("Circle");
         RadioButton radioButton3 = new RadioButton("Linje");
-//  toggle group skal hjelp med å skille radioknappen knappen hver gang et nytt figur blir valgt
+        //ToggleGroup hindrer at brukeren velger flere figurer samtidig
         ToggleGroup radioGroup = new ToggleGroup();
         radioButton1.setToggleGroup(radioGroup);
         radioButton2.setToggleGroup(radioGroup);
         radioButton3.setToggleGroup(radioGroup);
 
-        // lager hbox for å sortere knappene og mellomrom mellom knappene
+        //Lager en HBox for å posisjoner nodene i riktig posisjon og avstand mellom hverandre
         HBox hbox = new HBox(lbl, picker, radioButton1, radioButton2, radioButton3);
         hbox.setSpacing(20);
         hbox.setPadding(new Insets(25, 50, 50, 60));
         pane.getChildren().add(hbox);
 
-        /* her skal det tegnes figurer av circle rectangel og linje
-         * linje circle og rectagnel har sin egen classe med de er subclasse av figure
-         *
-         */
+        //Her oppretter Rectangell, Circlee og Linje objekter som blir plassert i canvasen
         pane.setOnMouseClicked(ev ->{
             if(ev.getButton().equals(MouseButton.MIDDLE)) {
                 if (radioButton1.isSelected()) {
@@ -66,16 +58,17 @@ public class MainOblig extends Application {
                     figures.add(figurCircle);
                     pane.getChildren().add(c);
                     c.setFill(picker.getValue());
-                /*} else if (radioButton3.isSelected()) {
+                } else if (radioButton3.isSelected()) {
                     Figur figLinje = new Linje();
                     Shape linjeShape = figLinje.getCreate();
                     figures.add(figLinje);
-                    pane.getChildren().add(linjeShape);*/
+                    pane.getChildren().add(linjeShape);
 
                 }
             }
         });
 
+        //Plasserer alle noder fra pane inn i scene og oppretter stage
         Scene scene = new Scene(pane,700,650);
         primaryStage.setScene(scene);
         primaryStage.show();

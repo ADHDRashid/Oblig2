@@ -1,15 +1,11 @@
 package sample;
-
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Rectangell extends Figur {
-
     private Rectangle recta;
     private double musx;
     private  double musy;
@@ -18,23 +14,25 @@ public class Rectangell extends Figur {
 
     //Rectangle r;
 
-
+    //boolean verdi for figurer som overlapper hverandre
     public boolean isSetForan() {
         return setForan;
     }
 
-    public Rectangell() {
+    //Default Rectangle uten variabler
+    public Rectangell() {}
 
-    }
-
+    //Defualt Rectangle konstruktr som inneholder variabler for opprettelse av Rectangle
+    //setX() og setY() er metoder hentet fra abstract figur klassen
     public Rectangell(double x,double y,double width,double height) {
         recta = new Rectangle(x,y,width,height);
         setX(x);
         setY(y);
-
-
-
     }
+
+    //Overrider metoden getCreate() fra figurer abstract klassen, for å opprette rectangle
+    //Samme ting skjer her som Circle figuren.
+    //størrelsen blir basert fra start posisjon, til slutt posisjon til Mus knappen
     @Override
     public Shape getCreate(){
         recta.setCursor(Cursor.HAND);
@@ -53,6 +51,7 @@ public class Rectangell extends Figur {
             }
         });
 
+        //returnerer rectangle for å opprettelse
         return recta;
     }
 
